@@ -1,3 +1,4 @@
+
 import webapp2, jinja2, os, re
 from google.appengine.ext import db
 from models import Post, User
@@ -20,9 +21,9 @@ class BlogHandler(webapp2.RequestHandler):
             The user parameter will be a User object.
         """
 
-        # TODO - filter the query so that only posts by the given user
-
-        return None
+#Done?        # TODO - filter the query so that only posts by the given user
+        user_posts = db.GqlQuery("SELECT * FROM Post WHERE author = '%s' ORDER BY created" % user.username)
+        return user_posts.fetch(limit=limit, offset=offset)
 
     def get_user_by_name(self, username):
         """ Get a user object from the db, based on their username """
@@ -81,7 +82,7 @@ class BlogIndexHandler(BlogHandler):
         # If request is for a specific page, set page number and offset accordingly
         page = self.request.get("page")
         offset = 0
-        page = page and int(page)
+        page = page and int(page) #what's 'and' do here?
         if page:
             offset = (int(page) - 1) * self.page_size
         else:
@@ -94,12 +95,17 @@ class BlogIndexHandler(BlogHandler):
         else:
             posts = self.get_posts(self.page_size, offset)
 
+#***Find out if this is right
+        #if not posts:               #syntax correct?
+        #    posts = ["no data"]     #will this create a single-item list, tuple, dict?
+
         # determine next/prev page numbers for navigation links
         if page > 1:
             prev_page = page - 1
         else:
             prev_page = None
 
+        #Changed len(posts) to posts.count()
         if len(posts) == self.page_size and Post.all().count() > offset+self.page_size:
             next_page = page + 1
         else:
@@ -137,7 +143,7 @@ class NewPostHandler(BlogHandler):
             post = Post(
                 title=title,
                 body=body,
-                author=self.user)
+                author=self.user.username)
             post.put()
 
             # get the id of the new post, so we can render the post's page (via the permalink)
@@ -296,7 +302,8 @@ app = webapp2.WSGIApplication([
     ('/blog/newpost', NewPostHandler),
     webapp2.Route('/blog/<id:\d+>', ViewPostHandler),
     webapp2.Route('/blog/<username:[a-zA-Z0-9_-]{3,20}>', BlogIndexHandler),
-    ('/signup', SignupHandler)
+    ('/signup', SignupHandler),
+    ('/login', LoginHandler)  #Added
 ], debug=True)
 
 # A list of paths that a user must be logged in to access
