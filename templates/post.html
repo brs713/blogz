@@ -4,7 +4,10 @@
 
 <h2 class="post-title">{{ post.title }}</h2>
 <p class="post-body">{{ post.body }}</p>
-<!-- TODO add author w/ link to author's blog -->
+<!--*Done*         TO-DO add author w/ link to author's blog -->
+<p>
+  <a href="/blog/{{ post.author }}">{{ post.author }}&apos;s blog</a>
+</p>
 <p class="post-author">
     written on {{ post.created.strftime('%Y-%m-%d') }}
 </p>

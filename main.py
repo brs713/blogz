@@ -13,6 +13,7 @@ class BlogHandler(webapp2.RequestHandler):
     def get_posts(self, limit, offset):
         """ Get all posts ordered by creation date (descending) """
         query = Post.all().order('-created')
+#Test:  Return just the query object
         return query.fetch(limit=limit, offset=offset)
 
     def get_posts_by_user(self, user, limit, offset):
@@ -21,8 +22,10 @@ class BlogHandler(webapp2.RequestHandler):
             The user parameter will be a User object.
         """
 
-#Done?        # TODO - filter the query so that only posts by the given user
+#*Done*        # TO-DO - filter the query so that only posts by the given user
         user_posts = db.GqlQuery("SELECT * FROM Post WHERE author = '%s' ORDER BY created" % user.username)
+        #Post.all().filter('author =', user)#
+#Test:  Return just the query object
         return user_posts.fetch(limit=limit, offset=offset)
 
     def get_user_by_name(self, username):
@@ -61,6 +64,12 @@ class BlogHandler(webapp2.RequestHandler):
 
         if not self.user and self.request.path in auth_paths:
             self.redirect('/login')
+
+    def logged_in(self, *a, **kw):
+        uid = self.read_secure_cookie('user_id')
+        self.user = uid and User.get_by_id(int(uid))
+        if self.user:
+            return true
 
 class IndexHandler(BlogHandler):
 
@@ -105,7 +114,7 @@ class BlogIndexHandler(BlogHandler):
         else:
             prev_page = None
 
-        #Changed len(posts) to posts.count()
+#Test:  Change len(posts) to posts.count()
         if len(posts) == self.page_size and Post.all().count() > offset+self.page_size:
             next_page = page + 1
         else:
@@ -264,7 +273,7 @@ class SignupHandler(BlogHandler):
 
 class LoginHandler(BlogHandler):
 
-    # TODO - The login code here is mostly set up for you, but there isn't a template to log in
+#*Done*     # TO-DO - The login code here is mostly set up for you, but there isn't a template to log in
 
     def render_login_form(self, error=""):
         """ Render the login form with or without an error, based on parameters """
@@ -303,7 +312,8 @@ app = webapp2.WSGIApplication([
     webapp2.Route('/blog/<id:\d+>', ViewPostHandler),
     webapp2.Route('/blog/<username:[a-zA-Z0-9_-]{3,20}>', BlogIndexHandler),
     ('/signup', SignupHandler),
-    ('/login', LoginHandler)  #Added
+    ('/login', LoginHandler),  #Added
+    ('/logout', LogoutHandler)  #Added
 ], debug=True)
 
 # A list of paths that a user must be logged in to access
