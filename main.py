@@ -24,7 +24,7 @@ class BlogHandler(webapp2.RequestHandler):
 
 #*Done*        # TO-DO - filter the query so that only posts by the given user
         user_posts = db.GqlQuery("SELECT * FROM Post WHERE author = '%s' ORDER BY created" % user.username)
-        #Post.all().filter('author =', user)#
+        #Post.all().filter('author =', user.username)
 #Test:  Return just the query object
         return user_posts.fetch(limit=limit, offset=offset)
 
@@ -101,8 +101,10 @@ class BlogIndexHandler(BlogHandler):
         if username:
             user = self.get_user_by_name(username)
             posts = self.get_posts_by_user(user, self.page_size, offset)
+            userpath = '/' + str(username)
         else:
             posts = self.get_posts(self.page_size, offset)
+            userpath = ""
 
 #***Find out if this is right
         #if not posts:               #syntax correct?
@@ -123,6 +125,7 @@ class BlogIndexHandler(BlogHandler):
         # render the page
         t = jinja_env.get_template("blog.html")
         response = t.render(
+                    userpath=userpath,
                     posts=posts,
                     page=page,
                     page_size=self.page_size,

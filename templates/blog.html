@@ -15,7 +15,7 @@
 {% endfor %}
 
 {% if prev_page %}
-<a href="/blog?page={{ prev_page }}">&lt; prev</a>
+<a href="/blog{{ userpath }}?page={{ prev_page }}">&lt; prev</a>
 {% endif %}
 
 {% if prev_page and next_page %}
@@ -23,7 +23,7 @@
 {% endif %}
 
 {% if next_page %}
-<a href="/blog?page={{ next_page }}">next &gt;</a>
+<a href="/blog{{ userpath }}?page={{ next_page }}">next &gt;</a>
 {% endif %}
 
 {% endblock %}
