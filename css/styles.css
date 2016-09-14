@@ -7,6 +7,7 @@ body {
 
 .error {
     color: red;
+    font-size: 20px;
 }
 
 label {
@@ -20,6 +21,7 @@ input[type=email] {
     width: 400px;
     font-size: 20px;
     padding: 2px;
+    margin: 5px;
 }
 
 textarea {
@@ -27,10 +29,13 @@ textarea {
     height: 200px;
     font-size: 17px;
     font-family: monospace;
+    margin: 5px;
 }
 
 input[type=submit] {
-    font-size: 24px;
+    font-size: 18px;
+    /*border-radius: 4px;*/
+    margin: 10px 10px 10px 0;
 }
 
 hr {
@@ -38,22 +43,25 @@ hr {
 }
 
 .post + .post {
-    margin-top: 20px;
+    margin-top: 40px;
 }
 
 .post-title {
     font-weight: bold;
-    font-size: 20px;
+    font-size: 18px;
 }
 
 .post-body {
     margin: 0;
-    font-size: 17px;
+    margin-left: 20px;
+    font-size: 16px;
 }
 
 .post-author {
+    margin-left: 20px;
+    margin-bottom: 30px;
     font-style: italic;
-    font-size: 12px;
+    font-size: 11px;
 }
 
 nav ul {
@@ -69,4 +77,16 @@ nav ul li {
 
 nav #user-account {
     float: right;
+    font-style: italic;
+    font-size: 15px;
+}
+
+.users {
+    font-size: 20px;
+    list-style: none;
+    margin: 10px -20px;
+}
+
+.user-list {
+    text-decoration: none;
 }

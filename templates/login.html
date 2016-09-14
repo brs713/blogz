@@ -7,18 +7,21 @@
 <form method="post">
   <div>
     <label>
-        <div>User Name</div>
+        <div>username</div>
         <input type="text" name="username" value="{{username}}">
     </label>
     <label>
-        <div>Password</div>
+        <div>password</div>
         <input type="password" name="password" value="{{password}}">
     </label>
   </div>
-  <div class="error">{{ error }}</div>
+
   <div>
-    <input type="submit">
-    <button><a href="/signup">Signup</a></button>
+    <input type="submit">  <span class="error">{{ error }}</span>
+  </div>
+  
+  <div>
+    <p><a href="/signup">Click Here</a> if you need an account!<p>
   </div>
 </form>
 

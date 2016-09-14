@@ -2,44 +2,33 @@
 
 {% block content %}
 
-<style>
-    .error {
-        color: red;
-    }
-</style>
+
 <h1>Signup</h1>
+<hr>
+
 <form method="post">
-    <table>
-        <tr>
-            <td><label for="username">Username</label></td>
-            <td>
-                <input name="username" type="text" value="{{ username }}">
-                <span class="error">{{ errors.username_error }}</span>
-            </td>
-        </tr>
-        <tr>
-            <td><label for="password">Password</label></td>
-            <td>
-                <input name="password" type="password">
-                <span class="error">{{ errors.password_error }}</span>
-            </td>
-        </tr>
-        <tr>
-            <td><label for="verify">Verify Password</label></td>
-            <td>
-                <input name="verify" type="password">
-                <span class="error">{{ errors.verify_error }}</span>
-            </td>
-        </tr>
-        <tr>
-            <td><label for="email">Email (optional)</label></td>
-            <td>
-                <input name="email" type="email" value="{{ email }}">
-                <span class="error">{{ errors.email_error }}</span>
-            </td>
-        </tr>
-    </table>
-    <input type="submit">
+  <label for="username">
+      <div>username</div>
+      <input name="username" type="text" value="{{ username }}">
+      <span class="error">{{ errors.username_error }}</span>
+  </label>
+  <label for="password">
+      <div>password</div>
+      <input name="password" type="password">
+      <span class="error">{{ errors.password_error }}</span>
+  </label>
+  <label for="verify">
+      <div>confirm password</div>
+      <input name="verify" type="password">
+      <span class="error">{{ errors.verify_error }}</span>
+  </label>
+  <label for="email">
+      <div>email (optional)</div>
+      <input name="email" type="email" value="{{ email }}">
+      <span class="error">{{ errors.email_error }}</span>
+  </label>
+
+  <input type="submit"><span class="error">{{ error }}</span>
 </form>
 
 {% endblock %}

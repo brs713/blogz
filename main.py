@@ -164,7 +164,7 @@ class NewPostHandler(BlogHandler):
         else:
             error = "we need both a title and a body!"
             self.render_form(title, body, error)
-
+        
 class ViewPostHandler(BlogHandler):
 
     def get(self, id):
