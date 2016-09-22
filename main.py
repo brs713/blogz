@@ -24,7 +24,7 @@ class BlogHandler(webapp2.RequestHandler):
 
 #*Done*        # TO-DO - filter the query so that only posts by the given user
         user_posts = db.GqlQuery("SELECT * FROM Post WHERE author = '%s' ORDER BY created" % user.username)
-        #Post.all().filter('author =', user.username)
+        user_posts = Post.all().filter('author', user).order('-created')
 #Test:  Return just the query object
         return user_posts.fetch(limit=limit, offset=offset)
 
@@ -165,7 +165,7 @@ class NewPostHandler(BlogHandler):
             post = Post(
                 title=title,
                 body=body,
-                author=self.user.username)
+                author=self.user)
             post.put()
 
             # get the id of the new post, so we can render the post's page (via the permalink)

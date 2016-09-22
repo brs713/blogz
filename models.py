@@ -10,4 +10,5 @@ class Post(db.Model):
     body = db.TextProperty(required = True)
     created = db.DateTimeProperty(auto_now_add = True)
     # TODO - we need an author field here; it should be required
-    author = db.StringProperty(required = True)
+    #author = db.StringProperty(required = True)
+    author = db.ReferenceProperty(User, required = True)
