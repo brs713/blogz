@@ -66,12 +66,6 @@ class BlogHandler(webapp2.RequestHandler):
             self.redirect('/login')
 
     def logged_in(self, *a, **kw):
-        """
-            This experiment kind of worked, but I think I would have had to
-            call this function and pass in a logged_in variable every time
-            base.html needed to be rendered.
-        """
-
         uid = self.read_secure_cookie('user_id')
         self.user = uid and User.get_by_id(int(uid))
         if self.user:
@@ -144,11 +138,7 @@ class NewPostHandler(BlogHandler):
     def render_form(self, title="", body="", error=""):
         """ Render the new post form with or without an error, based on parameters """
         t = jinja_env.get_template("newpost.html")
-        if self.user:
-            author=self.user.username
-        else:
-            author=""
-        response = t.render(title=title, body=body, error=error, author=author)
+        response = t.render(title=title, body=body, error=error)
         self.response.out.write(response)
 
     def get(self):
@@ -174,7 +164,7 @@ class NewPostHandler(BlogHandler):
         else:
             error = "we need both a title and a body!"
             self.render_form(title, body, error)
-
+        
 class ViewPostHandler(BlogHandler):
 
     def get(self, id):
